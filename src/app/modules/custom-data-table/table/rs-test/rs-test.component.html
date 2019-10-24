@@ -1,0 +1,337 @@
+<!-- <mat-card style="padding:0px; height: 100%; box-sizing: border-box;"> -->
+
+<div style="height: 100%; position:relative; overflow: hidden">
+    <div>
+        <!-- <div fxLayout="row" fxLayoutAlign="space-between center" class="header-wrapper" style="padding: 0 10px"> -->
+        <div fxLayout="row" fxLayoutGap="20px" style="padding: 0 10px">
+            <div fxFlexFill fxFlex="10" fxFlex.md="8" fxFlex.sm="10" fxFlex.xs="15">
+                <mat-action-list class="primary-checkbox adaptive-border-color" fxLayout="row"
+                    fxLayoutAlign="space-between center" style="margin-top: 5px;">
+                    <mat-checkbox color="primary" (change)="checkAllItems($event)" matTooltip="Select all" fxFlex="50"
+                        style="padding-left:10px;"></mat-checkbox>
+                    <button matTooltip="Multiple actions" fxFlex="50" mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>view_list</mat-icon>
+                        <!-- <mat-icon svgIcon="multiActions"></mat-icon> -->
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <ng-container *ngFor="let action of options.multiple_actions">
+                            <button mat-menu-item (click)="handleFiredMultipleAction(action.name)">
+                                <mat-icon>{{action.icon}}</mat-icon>
+                                <span>{{action.name}}</span>
+                            </button>
+                        </ng-container>
+                    </mat-menu>
+                </mat-action-list>
+            </div>
+
+            <div fxFlex>
+                    <app-search *ngIf="options.showSearchFilter" [filter]="options.searchFilters" (filterEmiter)="search($event)">
+                    </app-search>
+                </div>
+            <!-- search -->
+            <!-- <div *ngIf="showSearch == true" fxFlexFill fxFlex={{flexData.search.default}}
+                    fxFlex.md={{flexData.search.md}} fxFlex.sm={{flexData.search.sm}} fxFlex.xs={{flexData.search.xs}}
+                    class="search" fxLayout="row">
+
+                    <mat-form-field appearance="outline"
+                        [ngStyle]="{'width': options.query_options.sort == null ? '100%' : 'calc(100% - 200px)'}"
+                        class="example-chip-list">
+                        <mat-label>Search</mat-label>
+                        <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let filter of options.query_options.filters" [selectable]="selectable"
+                                [removable]="removable" (removed)="remove(filter)">
+                                <div
+                                    *ngIf="filter.acceptedValue == 'date' && filter.value != null; then chipWithPipe else chipNormal">
+                                </div>
+                                <ng-template #chipWithPipe>
+                                    {{filter.key}} : {{filter.value[0] | date : 'short'}} -
+                                    {{filter.value[1] | date : 'short'}}
+                                </ng-template>
+                                <ng-template #chipNormal>
+                                    {{filter.key}} : {{filter.value}}
+                                </ng-template>
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+
+
+                            </mat-chip>
+                            <input #dateTimeInput style="width: 1px; background-color:rgba(0, 0, 0, 0);"
+                                [formControl]="dateCtrl" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                                [ngStyle]="{'display': !selectDate ? 'none' : ''}" [selectMode]="'range'">
+                            <owl-date-time [disabled]="!selectDate" (afterPickerClosed)="putDate()" #dt1
+                                pickerType='both'></owl-date-time>
+                            <input #filterInput [formControl]="filterCtrl" [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                                #trigger="matAutocompleteTrigger" (focus)="handleShowAutocomplete()"
+                                (input)="handleShowAutocomplete()">
+
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let filter of allFilters" [value]="filter">
+                                {{filter}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="options.query_options.sort" style="width: 140px; margin-left: 5px"
+                        appearance="outline">
+                        <mat-label>Sort</mat-label>
+                        <mat-select (selectionChange)="fireSearch()" [(ngModel)]="options.query_options.sort.attribute">
+                            <mat-option *ngFor="let filter of allFilters" [value]="filter">
+                                {{filter}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="sortBox" *ngIf="options.query_options.sort"
+                        style="margin-left: 5px; width: 50px; height: 60px; padding: 0">
+                        <button (click)="changeSort()"
+                            style="width:100%; height: 100%; padding-top: 3px; border-radius: 0" mat-icon-button
+                            matTooltip="Direction: {{options.query_options.sort?.direction}}">
+                            <mat-icon *ngIf="options.query_options.sort?.direction== 'descending'">arrow_downward
+                            </mat-icon>
+                            <mat-icon *ngIf="options.query_options.sort?.direction== 'ascending'">arrow_upward
+                            </mat-icon>
+                        </button>
+                    </div>
+
+                </div> -->
+
+            <!-- search -->
+        </div>
+    </div>
+
+    <div style="height: calc(100% - 160px); overflow-y: auto; width: 100%; max-height: 25.5em;">
+        <ng-container *ngFor="let item of data">
+
+            <!-- <ng-container *ngFor="let rigers of item | key; let i = index">
+                {{rigers.key}} : {{rigers.value}} : {{i}}
+                <br>
+                
+
+            </ng-container> -->
+            <div matRipple (click)="handleSelectedRow(item)" class="item-wrapper" [ngStyle]="{
+                'cursor': selectableRow == true ?  'pointer' : '',
+                'border-color': options.ribbonConfiguration == null ? 'transparent transparent transparent #a9a9a961': 'transparent transparent transparent ' + getItemRibbonColor(item),
+                'background-color': selectedRow == item ? '#adadad26': 'rgba(0, 0, 0, 0.25)',
+                'border-left-width': options.ribbonConfiguration == null ? '0px' : '10px',
+                'background' : item?.data_table_checked ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.25)',
+                'border-left': 'solid 4px green'}">
+                <div class="list-item" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div *ngIf="options.checkBoxes" fxFlexFill fxFlex="2" fxFlex.sm="3" fxFlex.xs="5"
+                        fxFlexAlign="center">
+                        <mat-checkbox [matTooltip]="item?.data_table_checked ? 'Deselect' : 'Select'"
+                            (click)="$event.stopPropagation()" color="primary" (change)="handleCheck(item)"
+                            [checked]="item?.data_table_checked"></mat-checkbox>
+                    </div>
+
+                    <div fxFlexFill fxFlex={{flexData.rowContent.default}} fxFlex.sm={{flexData.rowContent.sm}}
+                        fxFlex.xs={{flexData.rowContent.xs}}>
+                        <!-- ROW 1 -->
+                        <div class="row1" fxLayout="row" fxLayoutAlign="space-between center">
+
+                            <div class="icon" fxFlexFill fxFlex="5">
+                                <mat-icon>
+                                    <!-- {{item.icon}} -->
+                                    <!-- same result with both , with the pipe works even if the key is different from 'icon' -->
+                                    <!-- {{(item|key)[0].value }} -->
+                                    {{item | nestedObject : options?.mappings?.icon}}
+
+                                </mat-icon>
+                                <!-- <img *ngIf="options.mappings.iconConfigurations" src="{{getValue(item, options?.mappings?.iconConfigurations?.attribute_path)}}" width="28px"> -->
+                            </div>
+
+                            <div class="title" fxFlexFill fxFlex="20" style="overflow: hidden" data-toggle="tooltip"
+                                data-placement="top">
+                                <h3 style="margin: 0px;">
+                                    <!-- {{item.title_path}} -->
+                                    <!-- same result with both -->
+                                    <!-- {{(item|key)[1].value }} -->
+                                    {{item | nestedObject : options?.mappings?.title_path}}
+                                </h3>
+                            </div>
+
+
+                            <div class="row1-left" fxFlexFill [fxFlex]="70" fxFlex.sm="25" fxFlex.xs="30"
+                                style="margin: 0px; font-size: 12px">
+                                <div>
+                                    <i style="font-size: 13px">
+                                        <!-- {{(item|key)[2].key }}: -->
+                                        <!-- saliu: -->
+                                        {{options?.mappings?.row1_info2?.label}}:
+                                    </i>
+                                    <span style="font-weight: 600; font-size: 13px">
+                                        <!-- Use if the data is a neseted object -->
+                                        <!-- {{item | nestedObject : "row1_info1.attribute_path"}} -->
+
+                                        <!-- If data isnt nested this is better because it works with any key - value -->
+                                        <!-- {{(item|key)[2].value}} -->
+                                        {{item | nestedObject : options?.mappings?.row1_info1?.attribute_path}}
+
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row1-right" fxFlexFill fxFlexOffset="15" fxFlex="35" fxFlexOffset.sm="15"
+                                fxFlex.sm="40" fxFlexOffset.xs="5" fxFlex.xs="45"
+                                style="font-size: 12px; text-align: right">
+                                <i style="font-size: 13px">
+                                    <!-- {{(item|key)[3].key }} : -->
+                                    <!-- how to pass args at the pipe -->
+                                    <!-- {{(item|key: "test") }} : -->
+                                    {{options?.mappings?.row1_info2?.label}}:
+                                </i><span style="font-weight: 600; font-size: 13px; font-size: 13px"
+                                    *ngIf="!((item | nestedObject : options?.mappings?.row1_info2?.attribute_path) | isDate)">
+                                    <!-- {{item | nestedObject : 'row1_info2.attribute_path'}} -->
+                                    <!-- {{(item|key)[3].value}} -->
+                                    {{item | nestedObject : options?.mappings?.row1_info2?.attribute_path}}
+                                </span>
+                                <span
+                                    *ngIf="(item | nestedObject : options?.mappings?.row1_info2?.attribute_path)| isDate"
+                                    style="font-weight: 600; font-size: 13px; font-size: 13px">
+                                    <!-- {{(item|key)[3].value | date: 'medium' }} -->
+                                    {{(item | nestedObject : options?.mappings?.row1_info2?.attribute_path) | date: 'medium' }}
+                                </span>
+                            </div>
+
+                            <!-- <div *ngIf="options.mappings.row1_info2 && options.mappings.row1_info2.type == 'date'"
+                                class="row1-right" fxFlexFill fxFlexOffset="15" fxFlex="35" fxFlexOffset.sm="15"
+                                fxFlex.sm="40" fxFlexOffset.xs="5" fxFlex.xs="45"
+                                style="font-size: 12px; text-align: right">
+                               <i style="font-size: 13px">{{options?.mappings?.row1_info2?.label}}:
+                               </i><span style="font-weight: 600; font-size: 13px; font-size: 13px">{{item | nestedObject : options?.mappings?.row1_info2?.attribute_path | date}}</span>
+                           </div> -->
+
+                            <div class="actions" fxFlexFill fxFlex="5" style="margin: 0px;">
+                                <button style="float:right" mat-icon-button [matMenuTriggerFor]="menu"
+                                    (click)="$event.stopPropagation()">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <ng-container *ngFor="let action of options.actions">
+                                        <button mat-menu-item
+                                            *ngIf="!(item.blockedActions != null && item.blockedActions.indexOf(action.name)>=0)"
+                                            (click)="handleFiredAction(action.name, item)">
+                                            <mat-icon>{{action?.icon}}</mat-icon>
+                                            <span>{{action?.name}}</span>
+                                        </button>
+                                    </ng-container>
+                                </mat-menu>
+                            </div>
+
+                        </div>
+                        <!-- ROW 1 -->
+
+                        <!-- ROW 2 -->
+                        <ng-container *ngFor="let a of options.mappings.rowDynamic">
+
+                            <div class="row2" fxLayout="row" fxLayoutAlign="space-between center">
+
+                                <div class="row2-left" fxFlexFill fxFlex="25" style="font-size: 12px">
+                                    <div>
+                                        <i style="font-size: 13px">
+                                            <!-- row2_info1.label: -->
+                                            <!-- {{(item|key)[4]?.key }}: -->
+                                            {{a.row2_info1.label}}:
+                                        </i>
+                                        <!-- row2_info1.attribute_path -->
+                                        <!-- {{(item|key)[4]?.value }} -->
+                                        {{item | nestedObject : a.row2_info1.attribute_path}}
+                                    </div>
+                                </div>
+                                <div class="row2-left" fxFlexFill fxFlex="25" style="font-size: 12px">
+                                    <div>
+                                        <i style="font-size: 13px">
+                                            <!-- row2_info2.label: -->
+                                            <!-- {{(item|key)[5]?.key }}: -->
+                                            {{a.row2_info2.label}}:
+                                        </i><span style="font-weight: 600; font-size: 13px">
+                                            <!-- row2_info2.attribute_path -->
+                                            <!-- {{(item|key)[5]?.value }} -->
+                                            {{item | nestedObject : a.row2_info2.attribute_path}}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="row2-left" fxFlexFill fxFlex="30">
+                                    <div *ngIf="!options.badgeConfiguration.show" class="row2-left"
+                                        style="font-size: 13px">
+                                        <div>
+                                            <i style="font-size: 12px">
+                                                <!-- row2_info3.label: -->
+                                                <!-- {{(item|key)[6]?.key }}: -->
+                                                {{a.row2_info3.label}}:
+                                            </i><span style="font-weight: 600; font-size: 13px">
+                                                <!-- row2_info3.attribute_path -->
+                                                <!-- {{(item|key)[6]?.value }} -->
+                                                {{item | nestedObject : a.row2_info3.attribute_path}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- <div fxLayout="row" fxLayout.sm="column" fxLayoutGap="5px"
+                                    fxLayoutAlign="center center">
+                                    <div>
+                                        <i style="font-size: 13px">options.badgeConfiguration.badge_path:
+                                        </i>
+                                    </div>
+                                    <div>
+                                        getValue(item, options.badgeConfiguration.badge_path)
+                                    </div>
+                                </div> -->
+                                    <div *ngIf="options.badgeConfiguration.show" fxLayout="row" fxLayout.sm="column"
+                                        fxLayoutGap="5px" fxLayoutAlign="center center">
+                                        <div>
+                                            <i style="font-size: 13px">
+                                                {{a.row2_info3.label}}:
+                                            </i>
+                                        </div>
+                                        <div [ngStyle]="getBadgeStyle((item|key)[6]?.value)">
+                                            {{item | nestedObject : a.row2_info3.attribute_path}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row2-left" fxFlexFill fxFlexOffset="15" fxFlex="5">
+
+                                    <div *ngIf="options.field_actions.show" style="text-align: center">
+                                        <button mat-icon-button>
+
+                                            <mat-icon [ngStyle]="getIconStyle(item.field_action)"
+                                                [title]="item.field_action ? options.field_actions.first_action.tooltip : options.field_actions.second_action.tooltip"
+                                                (click)="handleFieldAction(item); $event.stopPropagation()">
+                                                {{item.field_action ? 'toggle_on' :  'toggle_off'}}
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <!-- ROW 2 -->
+
+                    </div>
+                </div>
+                <!-- Ribbon message-->
+                <div style="margin-left: 10px; margin-bottom: 10px;" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon style="color: #f6af05">error_outline</mat-icon>
+                    <div style="margin-left: 10px; font-size: 12px; font-style: italic; margin-top: 0px;">
+                        getItemRibbonMessage(item)
+                    </div>
+                </div>
+                <!-- Ribbon message-->
+
+                <!-- <mat-divider></mat-divider> -->
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- style="border-radius: 5px; position: absolute; bottom: 0px; width: 100%" -->
+    <mat-paginator (page)="handlePageChanges($event)" showFirstLastButtons
+        [pageIndex]="options.paginatorOptions.page || 0" [pageSize]="options.paginatorOptions.size || 1"
+        [pageSizeOptions]="options.paginatorOptions.pageSizeOptions || [1, 5, 10, 25, 100]"
+        [length]="this.options.data.length">
+    </mat-paginator>
+
+</div>
+
+<!-- </mat-card> -->

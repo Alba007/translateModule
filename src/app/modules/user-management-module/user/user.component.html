@@ -1,0 +1,17 @@
+<!-- <p>
+  user works!
+</p> -->
+<div class="wrapper">
+  <div class="example-main">
+    <!-- ADD  BUTTON -->
+    <!-- <div fxLayoutAlign="end end">
+      <button mat-fab class="primary" id="add-contact-button" (click)="addEditUser()" aria-label="add contact"
+        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}" style="margin-top: -2.5vh;">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div> -->
+    <!-- / ADD  BUTTON -->
+
+      <app-table [options]='options' (messageEvent)="receiveMessage($event)"></app-table>
+  </div>
+</div>

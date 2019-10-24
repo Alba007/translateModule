@@ -1,0 +1,114 @@
+<!-- <p>
+  user-profile works!
+</p> -->
+
+<div class="wrapper">
+  <mat-card class="example-main">
+    <mat-card-title>
+      <!-- Profile -->
+    </mat-card-title>
+
+    <mat-card-content style="height: 37.5em; overflow:auto" cdkScrollable>
+      <form [formGroup]="form">
+
+        <mat-form-field appearance="standard" class="example-width" >
+          <mat-label>First Name</mat-label>
+          <input matInput readonly placeholder="Name" class="example-width" formControlName="firstName">
+          <!-- <mat-icon matSuffix>create</mat-icon>
+          <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="standard" class="example-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput readonly placeholder="Last Name" formControlName="lastName">
+          <!-- <mat-icon matSuffix>create</mat-icon>
+          <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="standard" class="example-width">
+          <mat-label>Username</mat-label>
+          <input matInput readonly placeholder="Username" formControlName="username">
+          <!-- <mat-icon matSuffix>create</mat-icon>
+          <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="standard" class="example-width">
+          <mat-label>Email</mat-label>
+          <input matInput readonly placeholder="Email" formControlName="email">
+          <!-- <mat-icon matSuffix>create</mat-icon>
+          <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="standard" class="example-width">
+          <mat-label>Language</mat-label>
+          <input type='text' matInput placeholder="Language" formControlName="language"
+            [matAutocomplete]="autoLanguage">
+          <mat-autocomplete #autoLanguage="matAutocomplete">
+            <mat-option *ngFor="let language of languages" [value]="language">
+              {{language}}
+            </mat-option>
+          </mat-autocomplete>
+          <!-- <mat-icon matSuffix>create</mat-icon> -->
+          <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="standard" class="example-width">
+          <mat-label>Timezone</mat-label>
+          <input type="text" placeholder="Search" aria-label="Number" matInput formControlName="timezone"
+            [matAutocomplete]="auto">
+          <mat-icon matSuffix matTooltip="Clear" (click)="clear($event)" *ngIf="form.value.timezone != ''">clear
+          </mat-icon>
+
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="setTimezone(option)">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br>
+        <!-- <mat-form-field appearance="standard" class="example-width">
+          <mat-label>Theme Options</mat-label>
+          <mat-select formControlName="theme">
+            <mat-option *ngFor="let theme of themeOptions" [value]="theme.value">
+              {{theme.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <!-- <pre>
+          {{form.value | json}}
+        </pre> -->
+      </form>
+
+      <div>
+        <h2>{{ 'HOME.TITLE' | translate }}</h2>
+        <label>
+          {{ 'HOME.SELECT' | translate }}
+          <select #langSelect (change)="translateService.use(langSelect.value)">
+            <option *ngFor="let lang of translateService.getLangs()" [value]="lang" [selected]="lang === translateService.currentLang">{{ lang }}</option>
+          </select>
+        </label>
+      </div>
+      
+    </mat-card-content>
+
+    <mat-card-actions>
+
+      <div fxLayoutAlign="space-between center">
+        <div>
+          <button mat-raised-button (click)="changePassword()">
+            Change Password
+          </button>
+        </div>
+        <div>
+          <button mat-raised-button color='primary' (click)="saveProfile(); save()" [disabled]="form.invalid">
+            Save
+          </button>
+          <button mat-button>Cancel</button>
+        </div>
+      </div>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

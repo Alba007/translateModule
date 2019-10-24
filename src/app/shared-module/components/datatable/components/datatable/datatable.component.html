@@ -1,0 +1,111 @@
+<div class="wrapper">
+    <mat-card class="alert-hist-con">
+        <mat-card-content>
+            <!-- EA -->
+            <div id="products" class="page-layout carded fullwidth inner-scroll">
+                <div class="top-bg accent"></div>
+                <div class="center">
+                    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+                        fxLayoutAlign.gt-sm="space-between center">
+                        <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="logo-icon s-32 mr-16"
+                                [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                {{options.icon}}
+                            </mat-icon>
+                            <span class="logo-animate" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                                {{ options.selector }}
+                            </span>
+                        </div>
+                        
+                        <div class="search-wrapper mx-32 mx-md-0">
+                            <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon>search</mat-icon>
+                                <input #filter placeholder="{{ options.selector + '.search' }}">
+                            </div>
+                        </div>
+                        
+                        <button *ngIf="options.canAdd === undefined" mat-raised-button (click)="addClick()"
+                            class="add-product-button fuse-white mt-24 mt-md-0">
+                            <span>{{ options.selector }} </span>
+                        </button>
+                    </div>
+                    <app-selected-bar class="accent-600" *ngIf="hasSelectedRows" [checkboxes]="checkboxes"
+                        (selectionChanged)="selectionChanged($event)" [@slideInTop]></app-selected-bar>
+                    <div class="content-card">
+                        <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+                            <mat-spinner mode="indeterminate" color="accent"></mat-spinner>
+                        </div>
+                        <!-- TABLE -->
+                        <mat-table class="products-table dss-table" #table [dataSource]="dataSource" matSort
+                            matSortActive="id" matSortDirection="desc" matSortDisableClear>
+
+                            <ng-container matColumnDef="checkbox">
+                                <mat-header-cell *matHeaderCellDef class="checkbox"></mat-header-cell>
+                                <mat-cell *matCellDef="let row" class="checkbox">
+                                    <mat-checkbox [(ngModel)]="checkboxes[row.id]"
+                                        (ngModelChange)="onSelectedChange(row.id)" (click)="$event.stopPropagation()">
+                                    </mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container *ngFor="let col of displayedColumns" matColumnDef="{{col}}">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [disabled]="options.displayedColumnsData[col].disableSort">{{col}}</mat-header-cell>
+                                <mat-cell *matCellDef="let row" [ngSwitch]="options.displayedColumnsData[col].type">
+                                    <p *ngSwitchCase="undefined">{{row[col]}}</p>
+                                    <p *ngSwitchCase="'html'">
+                                        <ng-template [ngTemplateOutlet]="options.displayedColumnsData[col].template"
+                                            [ngTemplateOutletContext]="{row: row}"></ng-template>
+                                    </p>
+                                    <p *ngSwitchCase="'date'">{{row[col] | date}}</p>
+                                    <p *ngSwitchCase="'compound'">{{getProperty(row,col)}}</p>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="buttons">
+                                <mat-header-cell *matHeaderCellDef class="button"></mat-header-cell>
+                                <mat-cell *matCellDef="let row" class="button">
+                                    <div fxFlex="row" fxLayoutAlign="end center">
+                                        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                            (click)="$event.stopPropagation();">
+                                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                                        </button>
+
+                                        <mat-menu #moreMenu="matMenu">
+                                            <button mat-menu-item aria-label="remove" (click)="delete(row.id)">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>Remove</span>
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="finalDisplayedColumns; sticky:true"
+                                class="mat-table-header">
+                            </mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: finalDisplayedColumns;" (click)="rowClick(row)"
+                                class="product mat-table-row" matRipple [ngClass]="{'accent-50':checkboxes[row.id]}"
+                                [@animate]="{value:'*',params:{y:'100%'}}">
+                            </mat-row>
+
+                        </mat-table>
+                        <!-- TABLE -->
+
+                        <mat-paginator #paginator [length]="dataSource.totalElements" [pageIndex]="0" [pageSize]="10"
+                            [pageSizeOptions]="[5, 10, 25, 100]">
+                        </mat-paginator>
+
+                    </div>
+                </div>
+            </div>
+            <!-- EA -->
+
+        </mat-card-content>
+    </mat-card>
+
+
+
+
+</div>

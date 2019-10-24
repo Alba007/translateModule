@@ -1,0 +1,41 @@
+/* Offline material icons*/
+@import '~material-icons/iconfont/material-icons.css';
+
+/*Date time picker style*/
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+// Import Fuse core library
+@import "../@fuse/scss/core";
+// Import app.theme.scss
+@import "./app.theme";
+
+button,
+a,
+.mat-button {
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.backdrop-hidden {
+    background-color: transparent;
+}
+
+.custom-dialog-container .mat-dialog-container {
+    padding: 0px !important;
+}
+
+.example-wrap {
+    padding: 2em;
+}
+
+/* color of paginator */
+.mat-paginator-page-size-select .mat-select-value,
+.mat-paginator-navigation-first.mat-icon-button,
+.mat-paginator-navigation-previous.mat-icon-button,
+.mat-paginator-navigation-next.mat-icon-button,
+.mat-paginator-navigation-last.mat-icon-button {
+    color: #f5bd34 !important
+}

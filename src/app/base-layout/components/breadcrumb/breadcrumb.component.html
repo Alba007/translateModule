@@ -1,0 +1,15 @@
+<ol id="breadcrumb" style="padding-left: 15px;">
+  <li>
+    <a 
+    [routerLink]="['/layout/monitoring']">
+      <img 
+      src="../../../../../assets/img/logo_en.png" 
+      alt="Logo" 
+      width="125px" 
+      height="25px">
+    </a>
+  </li>
+  <li *ngFor="let breadcrumb of breadcrumbs" class="responsiveBreadcrumb">
+    <a [routerLink]="[breadcrumb.url]" style="text-transform: capitalize;">{{breadcrumb.label}} {{breadcrumb.params['id']}}</a>
+  </li>
+</ol>

@@ -1,0 +1,21 @@
+<!-- <p>
+  multiple-actions works!
+</p> -->
+
+<mat-action-list class="primary-checkbox adaptive-border-color" fxLayout="row" fxLayoutAlign="space-between center"
+  style="margin-top: 5px;">
+  <mat-checkbox color="primary" (change)="checkAllItems($event)" matTooltip="Select all" fxFlex="50"
+    style="padding-left:10px;"></mat-checkbox>
+  <button class="rotate" matTooltip="Multiple actions" fxFlex="50" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>eject</mat-icon>
+    <!-- <mat-icon svgIcon="multiActions"></mat-icon> -->
+  </button>
+  <mat-menu #menu="matMenu">
+    <ng-container *ngFor="let action of multiple_actions">
+      <button mat-menu-item (click)="handleFiredMultipleAction(action.name)">
+        <mat-icon>{{action.icon}}</mat-icon>
+        <span>{{action.name}}</span>
+      </button>
+    </ng-container>
+  </mat-menu>
+</mat-action-list>

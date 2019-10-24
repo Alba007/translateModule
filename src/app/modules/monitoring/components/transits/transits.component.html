@@ -1,0 +1,33 @@
+<!-- <p>
+  transits works!
+</!--> 
+<div class="wrapper">
+
+  <div class="example-main">
+    
+    <mat-drawer-container >
+      <mat-drawer #drawer position="end" mode="side" opened='false' >
+  
+        <div style="padding: 16px">
+          <!-- drawer -->
+          <!-- <app-add-edit-roles [data]='rowData' (closeButton)="drawer.toggle()" (rowEdited)="editRole($event)">
+          </app-add-edit-roles> -->
+          <app-view-transit  [data]='rowData'  (closeButton)="drawer.toggle()"></app-view-transit>
+        </div>
+  
+      </mat-drawer>
+  
+      <mat-drawer-content>
+          <h2>{{ 'HOME.TITLE' | translate }}</h2>
+
+        <!-- <button (click)="drawer.toggle()">Open</button> -->
+        <!-- <div style="margin: 10px 0px 10px 10px"> -->
+        <div >
+          <app-table [options]='options' (messageEvent)="receiveMessage($event)"></app-table>
+        </div>
+  
+      </mat-drawer-content>
+    
+    </mat-drawer-container>
+  </div>
+  </div>

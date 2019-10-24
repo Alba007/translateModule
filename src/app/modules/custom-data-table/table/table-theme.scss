@@ -1,0 +1,16 @@
+@mixin custom-table($theme) {
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $accent: map-get($theme, accent);
+    $is-dark: map-get($theme, is-dark);
+
+    .example-label {
+        color: mat-color($foreground, secondary-text);
+
+        // color: rgba(255, 255, 255, 0.7) !important;
+        font-family: Muli, Helvetica Neue, Arial, sans-serif;
+        font-size: 12px;
+        margin: 0 4px;
+    }
+}

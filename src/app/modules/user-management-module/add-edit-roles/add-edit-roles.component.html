@@ -1,0 +1,124 @@
+<!-- <p>
+  add-edit-roles works!
+</p> -->
+
+<!-- <mat-toolbar matDialogTitle>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+
+  </mat-toolbar-row>
+</mat-toolbar> -->
+
+<!-- <mat-form-field>
+    <mat-select #select="matSelect"
+    (selectionChange)="selectionchanged()" [(ngModel)]="selectedValues" multiple> -->
+<!-- <mat-checkbox  [(ngModel)]="allchecked"
+           (change)="onAllChanged($event.checked)" style="padding-left:15px;">
+                   All
+         </mat-checkbox> -->
+<!-- <mat-option *ngFor="let app of appList" [value]="app">{{app}}</mat-option>
+     </mat-select>    
+  </mat-form-field> -->
+
+<div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" matDialogTitle>
+    
+    <div fxLayoutAlign="start center">
+      <span class="title dialog-title">{{title}} Role</span>
+    </div>
+
+    <div fxLayoutAlign="end end">
+      <button color="primary" mat-icon-button (click)="close();">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+
+  </div>
+  <mat-divider></mat-divider>
+  <br>
+
+  <form [formGroup]="form">
+
+    <mat-radio-group aria-label="Select an option" formControlName="type">
+      <mat-radio-button class="example-space" value="SYSTEM">System</mat-radio-button>
+      <mat-radio-button value="APPLICATION">Application</mat-radio-button>
+    </mat-radio-group>
+    <br>
+
+    <div mat-dialog-content formArrayName="roles">
+
+      <div *ngFor="let role of rolesForms.controls; let i=index" [formGroupName]="i">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-form-field appearance="standard" style="width: 25em">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name">
+            <!-- <mat-icon matSuffix>create</mat-icon> -->
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
+          <button mat-icon-button [color]="'primary'" class="example-outline" (click)="deleteRole(i)"
+            matTooltip="Delete" matTooltipPosition="right" matTooltipClass="warn-tooltip-red">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+
+        <mat-form-field fxFill *ngIf="showAppList">
+          <mat-label>Applications</mat-label>
+          <mat-select multiple formControlName="applications">
+            <!-- <mat-checkbox style="padding-left:15px;" (change)="test(i, $event.checked)">
+                   All
+            </mat-checkbox> -->
+
+            <!-- <ng-container [ngTemplateOutlet]="selectAll"></ng-container> -->
+
+            <mat-option *ngFor="let app of appList" [value]="app">{{app}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+       
+        <!-- <mat-form-field appearance="standard" fxFill>
+          <mat-label>Description</mat-label>
+          <input matInput placeholder="Description" formControlName="description">
+         
+        </mat-form-field>
+        <br> -->
+
+
+
+      </div>
+    </div>
+    <div fxLayout="row"  *ngIf="showAddAnother">
+      <mat-chip-list class="example-space">
+        <mat-chip color="primary" (click)="addNewRole()" matTooltip="Add Another">
+          <mat-icon>add</mat-icon>
+          Role
+        </mat-chip>
+      </mat-chip-list>
+
+      <mat-chip-list *ngIf="rolesForms.length !==0">
+        <mat-chip color="warn" (click)="deleteAllRoles()" matTooltip="Delete All Fields">
+          <mat-icon>delete_forever</mat-icon>
+          Delete All
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <pre>
+      {{form.value | json}}
+    </pre>
+  </form>
+  <div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-raised-button color='primary' (click)="addRoles(); close()" [disabled]="form.invalid">
+      Save
+    </button>
+    <button mat-button (click)="close()">Cancel</button>
+  </div>
+</div>
+
+<!-- <ng-template #selectAll>
+  <mat-option (click)="toggleSelectAll()">
+    <mat-pseudo-checkbox class="mat-option-pseudo-checkbox"
+      [state]="state">
+    </mat-pseudo-checkbox>
+    Select All
+  </mat-option>
+</ng-template> -->

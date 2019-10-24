@@ -1,0 +1,99 @@
+.search {
+    padding: 10px 0 10px 5px;
+    /* background-color: #3f505a; */
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+// ::ng-deep .mat-form-field-wrapper {
+//     padding-bottom: 0px;
+// }
+
+.list-item {
+    padding: 10px;
+}
+
+.status-ribbon{
+    height: 72px;
+    width: 10px;
+    margin-right: 10px;
+    float: left;
+    background-color: green;
+}
+
+.primary-checkbox{
+    border-radius: 5px;
+    padding-bottom: 9px;
+    border: 1px solid #a9a9a961;
+}
+
+.item-wrapper{
+    border: 1px solid #a9a9a961;
+    border-radius: 5px;
+    margin: 10px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.badge-class-green {
+    border: solid 2px #008000;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 13px;
+}
+
+.badge-class-gray {
+    border: solid 2px #a9a9a961;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 13px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .sortBox {
+    border-radius: 5px;
+    border: 1px solid #a9a9a961;
+    margin: 4px 0 4px 10px;
+    padding: 0 5px;
+  }

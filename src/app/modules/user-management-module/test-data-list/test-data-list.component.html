@@ -1,0 +1,84 @@
+<p>
+  test-data-list works!
+</p>
+<!-- DEV RS -->
+<div style="padding: 10px">
+  <app-data-list [template]="dataListTemp" 
+                 [dataContext]="datasource" 
+                 [checkBox]="checkBox"
+                 [showPaginator]="showPaginator"
+                 [paginatorOptions]="paginatorOptions"
+                 [title]="title"
+                 [showSearch]="showSearch"
+                 [searchFilters]="searchFilters"
+                 [multiple_actions]="multiple_actions"
+                 [sortDirection]="sortDirection"
+                 (messageEvent)="receiveMessage($event)"></app-data-list>
+</div>
+
+<ng-template #dataListTemp let-items="data" let-showCheckBox="showCheckBox" let-fns="fns">
+  <app-test-template>rs</app-test-template>
+  <ng-container *ngFor="let item of items">
+    <!-- Implement any template you want here -->
+    <div matRipple class="item-list" (click)="fns.rs(item)" [ngStyle]="{
+       
+      'background' : 'rgba(0, 0, 0, 0.25)',
+
+      'border-left': 'solid 4px green'}">
+
+      <div class="row1" fxLayout="row">
+        <div fxFlexFill fxFlex="5">
+          <!-- <mat-checkbox color="primary" *ngIf="showCheckBox" [checked]="item?.data_table_checked"></mat-checkbox> -->
+          <mat-checkbox *ngIf="showCheckBox"
+                        color="primary" 
+                        [matTooltip]="item?.data_table_checked ? 'Deselect' : 'Select'"
+                        [checked]="item?.data_table_checked"
+                        (click)="$event.stopPropagation()" 
+                        (change)="fns.handleCheck(item)"></mat-checkbox>
+        </div>
+
+        <div class="icon" fxFlexFill fxFlex="5">
+          <mat-icon style="line-height: 40px">
+            {{item.icon}}
+          </mat-icon>
+        </div>
+
+        <div class="title" fxFlexFill fxFlex="20">
+          <h3 style="margin: 0">
+            {{item.name}}
+          </h3>
+        </div>
+
+        <div class="actions" fxFlexFill fxFlex="5">
+          <button mat-icon-button matTooltip="More Actions" [matMenuTriggerFor]="menu"
+            (click)="$event.stopPropagation()">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <ng-container *ngFor="let action of actions">
+              <button mat-menu-item (click)="fns.handleFiredAction(action.name, item)">
+                <mat-icon>{{action.icon}}</mat-icon>
+                <span>{{action.name}}</span>
+              </button>
+            </ng-container>
+
+            <button mat-menu-item (click)="fns.handleFiredAction('edit', item)">
+              <mat-icon>launch</mat-icon>
+              <span>Edit</span>
+            </button>
+
+            <button mat-menu-item (click)="fns.handleFiredAction('delete', item)">
+              <mat-icon color="warn">delete_outline</mat-icon>
+              <span>Delete</span>
+            </button>
+
+          </mat-menu>
+        </div>
+
+      </div>
+
+    </div>
+  </ng-container>
+
+</ng-template>

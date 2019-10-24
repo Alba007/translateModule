@@ -1,0 +1,56 @@
+<p>
+  data-list works!
+</p>
+
+<mat-card-title>
+  Title {{title}}
+</mat-card-title>
+<mat-divider></mat-divider>
+<br>
+
+<mat-card>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="5%" fxFlex.md="8" fxFlex.sm="10" fxFlex.xs="15">
+        <app-multiple-actions [multiple_actions]="multiple_actions" 
+                              [data]="data"
+                              (multipleActionEmiter)="handleFiredActionForAll($event)"></app-multiple-actions>
+      </div>
+
+      <div fxFlex="90%" fxFlex.md="84" fxFlex.sm="80" fxFlex.sm="70">
+        <app-search *ngIf="showSearch"
+        [filter]="searchFilters" 
+        (filterEmiter)="search($event)">
+        </app-search>
+      </div>
+
+      <div fxFlex="5%" fxFlex.md="8" fxFlex.sm="10" fxFlex.xs="15">
+        <app-sort [sortList]="searchFilters" 
+                  [sortDirection]="sortDirection"
+                  (sortEmmiter)="sort($event)"></app-sort>
+      </div>
+
+    </div>
+  
+    <ng-container [ngTemplateOutlet]="template" 
+                  [ngTemplateOutletContext]="{ data: data , 
+                                               showCheckBox: checkBox,
+                                               fns: {
+                                                      rs: itemClick, 
+                                                      handleFiredAction: handleFiredAction,
+                                                      handleCheck: handleCheck
+                                                    }
+                                              }">
+    </ng-container>
+    
+    <mat-paginator *ngIf="showPaginator"
+                    showFirstLastButtons 
+                    (page)="handlePageChanges($event)" 
+                    [pageIndex]="paginatorOptions.page || 0" 
+                    [pageSize]="paginatorOptions.size || 1"
+                    [pageSizeOptions]="paginatorOptions.pageSizeOptions || [1, 5, 10, 25, 100]"
+                    [length]="this.dataContext.length">
+    </mat-paginator>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,109 @@
+<div>
+  <mat-toolbar>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span>Table Settings</span>
+      <button mat-icon-button (click)="closeDrawer()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+ 
+  <form [formGroup]="form" class="example-content">
+
+    <div class="container"
+    fxLayout
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="10px"
+    fxLayoutGap.xs="0">
+      <div>
+        <h3>Select</h3>
+        <mat-slide-toggle formControlName="select">{{form.value.select? 'Hide':'Show' }}</mat-slide-toggle>
+      </div>
+      <div>
+        <h3>Actions</h3>
+        <mat-slide-toggle formControlName="actions">{{form.value.actions? 'Hide':'Show' }}</mat-slide-toggle>
+      </div>
+      <div>
+        <h3>Second Row</h3>
+        <mat-slide-toggle formControlName="secondRow" [matTooltip]="!form.get('secondRow').valid ? 'Disabled!' : ''">{{form.value.secondRow? 'Hide':'Show' }}</mat-slide-toggle>
+      </div>
+      <div>
+        <h3>Details Row</h3>
+        <mat-slide-toggle formControlName="detailsRow" [matTooltip]="!form.get('detailsRow').valid ? 'Disabled!' : ''">{{form.value.detailsRow? 'Hide':'Show' }}</mat-slide-toggle>
+      </div>
+      <div>
+        <h3>Search Filters</h3>
+        <mat-slide-toggle formControlName="searchFilter" [matTooltip]="!form.get('searchFilter').valid ? 'Disabled!' : ''">{{form.value.detailsRow? 'Hide':'Show' }}</mat-slide-toggle>
+      </div>
+    </div>
+
+    <br>
+    
+    <h3>Edit Columns</h3>
+    <div formArrayName="tableColumns">
+
+      <div *ngFor="let tableCol of tableColumnForms.controls; let i=index" [formGroupName]="i">
+        <mat-checkbox 
+        class="example-space" 
+        color='primary' 
+        formControlName="showColum" 
+        [matTooltip]="['Show/Hide']" 
+        (click)="save()">
+        </mat-checkbox>
+
+        <mat-form-field appearance="outline" class="example-space">
+          <mat-label>Column Name</mat-label>
+          <input matInput placeholder="Name" formControlName="name">
+          <mat-icon matSuffix>create</mat-icon>
+          <mat-hint>Hint</mat-hint>
+          <!-- <mat-error *ngIf="hasError('code', 'required')">Status Code is required</mat-error> -->
+        </mat-form-field>
+<!-- <br>   -->
+        <mat-form-field appearance="outline" style="width: 8.5em;">
+          <mat-label>Column Position</mat-label>
+          <input type="number" matInput placeholder="Position" formControlName="position">
+          <mat-icon matSuffix>create</mat-icon>
+          <mat-hint>*Optional</mat-hint>
+          <!-- <mat-error *ngIf="hasError('code', 'required')">Status Description is required</mat-error> -->
+        </mat-form-field>
+
+        <button mat-icon-button [color]="'primary'" class="example-outline" (click)="deleteTableColumn(i)"
+          matTooltip="Delete" matTooltipPosition="right" matTooltipClass="warn-tooltip-red">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+      </div>
+
+    </div>
+
+    <div fxLayout="row">
+      <mat-chip-list class="example-space">
+        <mat-chip color="primary" (click)="addTableColumn()" matTooltip="Add Another">
+          <mat-icon>add</mat-icon>
+          Table Column
+        </mat-chip>
+      </mat-chip-list>
+
+      <mat-chip-list *ngIf="tableColumnForms.length !==0">
+        <mat-chip color="warn" (click)="deleteAllTableColumns()" matTooltip="Delete All Fields">
+          <mat-icon>delete_forever</mat-icon>
+          Delete All
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <!-- <pre>
+      {{ form.value | json }}
+    </pre> -->
+  </form>
+
+  <div fxLayoutAlign="end end" style="padding: 5px 2vh;">
+    <button mat-raised-button color='primary' (click)="save()">
+      Save
+    </button>
+    <button mat-button (click)="closeDrawer()">Cancel</button>
+
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<!-- <p>
+  add-keys works!
+</p> -->
+<div fxLayout="row" fxLayoutAlign="space-between center" matDialogTitle>
+
+  <div fxLayoutAlign="start center">
+    <span class="title dialog-title">Add Keys</span>
+  </div>
+
+  <div fxLayoutAlign="end end">
+    <button color="primary" mat-icon-button (click)="close();">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+</div>
+<mat-divider></mat-divider>
+<br>
+<mat-hint>Keys should be in English!</mat-hint>
+<form [formGroup]="form" mat-dialog-content>
+ 
+  <div formArrayName="keyValue">
+    <div *ngFor="let role of keyValueForms.controls; let i=index" [formGroupName]="i">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field appearance="standard">
+          <mat-label>Key</mat-label>
+          <input matInput placeholder="Name" formControlName="key">
+          <!-- <mat-icon matSuffix>create</mat-icon> -->
+          <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Default Value</mat-label>
+          <input matInput placeholder="Name" formControlName="value">
+          <!-- <mat-icon matSuffix>create</mat-icon> -->
+          <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <button mat-icon-button [color]="'primary'" class="example-outline" (click)="deleteKeyValue(i)"
+          matTooltip="Delete" matTooltipPosition="right" matTooltipClass="warn-tooltip-red">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <mat-chip-list class="example-space">
+      <mat-chip color="primary" (click)="addNewKeyValue()" matTooltip="Add Another">
+        <mat-icon>add</mat-icon>
+        Key Value
+      </mat-chip>
+    </mat-chip-list>
+
+    <mat-chip-list *ngIf="keyValueForms.length !==0">
+      <mat-chip color="warn" (click)="deleteAllKeyValues()" matTooltip="Delete All Fields">
+        <mat-icon>delete_forever</mat-icon>
+        Delete All
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <pre>
+        {{form.value | json}}
+      </pre>
+
+
+</form>
+
+<div mat-dialog-actions fxLayoutAlign="end end">
+  <button mat-raised-button color='primary' [mat-dialog-close]="true" [disabled]="form.invalid">
+    Save
+  </button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</div>

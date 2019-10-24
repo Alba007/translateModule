@@ -1,0 +1,37 @@
+<!-- <p>
+  users works!
+
+</p>
+<button (click)="test()">test</button> -->
+
+
+<div class="">
+  <!-- <mat-card class="example-main"> -->
+  <div class="example-main">
+    <!-- ADD  BUTTON -->
+    <!-- <button mat-fab class="primary" id="add-contact-button" (click)="addNewUser()" aria-label="add contact"
+        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}" style="margin-top: -2.5vh;">
+        <mat-icon>person_add</mat-icon>
+      </button> -->
+    <div fxLayoutAlign="end end">
+
+      <fab-speed-dial direction="left" style="margin-top: -2.5vh;">
+        <button type="button" mat-fab class="primary" fab-toggle (click)="addEditRole()">
+          <mat-icon>add</mat-icon>
+        </button>
+
+        <button type="button" mat-mini-fab fab-button><i class="material-icons">&#xE84D;</i></button>
+
+        <button type="button" mat-mini-fab fab-button><i class="material-icons">&#xE84D;</i></button>
+
+        <button type="button" mat-mini-fab fab-button><i class="material-icons">&#xE84D;</i></button>
+      </fab-speed-dial>
+    </div>
+    <!-- / ADD  BUTTON -->
+
+    <!-- <mat-card-content class="example-pad"> -->
+    <app-table [(options)]='options'></app-table>
+    <!-- </mat-card-content> -->
+    <!-- </mat-card>  -->
+  </div>
+</div>

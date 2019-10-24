@@ -1,0 +1,92 @@
+<!-- <p>
+  add-edit-app works!
+</p> -->
+<!-- <mat-toolbar matDialogTitle>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="title dialog-title">{{title}} Application</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="wrapper example-main example-wrap"> -->
+<div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" matDialogTitle>
+    <!-- CENTER -->
+    <div fxLayoutAlign="start center">
+      <span class="title dialog-title">{{title}} Application</span>
+
+    </div>
+    <!-- ADD  BUTTON -->
+    <div fxLayoutAlign="end end">
+      <button color="primary" mat-icon-button mat-dialog-close>
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <br>
+  <form [formGroup]="form">
+
+    <mat-form-field appearance="standard" fxFill>
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" formControlName="applicationName">
+      <!-- <mat-icon matSuffix>create</mat-icon> -->
+      <!-- <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="standard" fxFill>
+      <mat-label>Icon</mat-label>
+      <input matInput placeholder="Icon Uri" formControlName="iconUrl">
+      <!-- <mat-icon matSuffix>create</mat-icon> -->
+      <!-- <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="standard" fxFill>
+      <mat-label>Url</mat-label>
+      <input matInput placeholder="Url" formControlName="applicationUrl">
+      <!-- <mat-icon matSuffix>create</mat-icon> -->
+      <!-- <mat-hint>EXP: 192.168.0.75:8080</mat-hint> -->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="standard" fxFill>
+      <mat-label>Description</mat-label>
+      <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" 
+      placeholder="Description" formControlName="description">
+      </textarea>
+      <!-- <mat-icon matSuffix>create</mat-icon> -->
+      <!-- <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" fxFill>
+      <mat-label>Config Api</mat-label>
+      <input matInput placeholder="Autoconfig" formControlName="autoconfigApi">
+      <!-- <mat-icon matSuffix>create</mat-icon> -->
+      <mat-hint>
+        EXP: http://ovh1.rayonit.com:4100/metadata/api/v1/dssinfo
+        <br>
+        <!-- EXP: http://ovh1.rayonit.com:4001/api/v1/gateway/info
+        <br> -->
+      </mat-hint>
+
+    </mat-form-field>
+
+    <!-- <pre>
+      {{form.value | json}}
+    </pre> -->
+  </form>
+
+  <div mat-dialog-actions fxLayoutAlign="space-between center">
+    <div>
+      <button mat-raised-button (click)="getAppInfo()">Autoconfig</button>
+    </div>
+    <div>
+      <button mat-raised-button color='primary' (click)="addApp()" [mat-dialog-close]="true" [disabled]="form.invalid">
+        Save
+      </button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+
+  </div>
+</div>

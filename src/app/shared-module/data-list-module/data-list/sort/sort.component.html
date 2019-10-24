@@ -1,0 +1,24 @@
+<!-- <p>
+  sort works!
+</p> -->
+<mat-action-list class="primary-checkbox adaptive-border-color" fxLayout="row" fxLayoutAlign="space-between center"
+  style="margin-top: 5px;">
+  <button fxFlex="50" matTooltip="Sort" mat-icon-button (click)="changeSortDirection()">
+      <mat-icon>{{sortDirection ? 'arrow_downward' :  'arrow_upward'}}</mat-icon>
+  </button>
+
+  <button matTooltip="Sort By" fxFlex="50" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>youtube_searched_for</mat-icon>
+    <!-- <mat-icon svgIcon="multiActions"></mat-icon> -->
+  </button>
+  
+  <mat-menu #menu="matMenu">
+  
+    <ng-container *ngFor="let sort of sortList">
+      <button mat-menu-item (click)="sortBy(sort.name)">
+        <span>{{sort.name}}</span>
+      </button>
+    </ng-container>
+  
+  </mat-menu>
+</mat-action-list>

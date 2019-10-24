@@ -1,0 +1,452 @@
+<!-- <p>
+  table works!
+</p> -->
+
+<mat-drawer-container>
+  <mat-drawer #drawer position="end" mode="side" opened='false'>
+    <!-- <button (click)="hideRow('detailsRow')">hide details</button>
+    <button (click)="showRow('detailsRow')">show details</button>
+    <br>
+    <button (click)="hideRow('secondRow')">hide Second Row</button>
+    <button (click)="showRow('secondRow')">show Second row</button>
+
+    <button mat-button (click)="addDynamicColumn('test2')">add</button>
+
+    <button mat-button (click)="removeDynamicColumn('test2')">Remove</button>
+    <br>
+    <button mat-button (click)="addDynamicColumn('test2', 3)">add3</button>
+    <br>
+    <button mat-button (click)="addStaticColumn('select')">Add Select</button>
+    <button mat-button (click)="addStaticColumn('actions')">Add Actions</button>
+
+    <br>
+    <button mat-button (click)="removeStaticColumn('select')">Remove Select</button>
+    <button mat-button (click)="removeStaticColumn('actions')">Remove Actions</button>
+    <br> -->
+
+    <div>
+      <app-table-settings [data]='options' (hideSettings)="drawer.toggle()"
+        (newTableColumnsEvent)="reciveNewColumns($event)"></app-table-settings>
+    </div>
+
+  </mat-drawer>
+  <mat-drawer-content>
+
+    <div class="">
+      <div style="padding-right: 10px;">
+        <mat-card-title fxLayoutAlign="space-between">
+          <div>
+            {{title}}
+          </div>
+
+          <div>
+            <button mat-icon-button aria-label="add" matTooltip="Add" (click)="sendMessage('','add')">
+              <mat-icon>add</mat-icon>
+            </button>
+
+            <ng-container *ngFor="let action of options.tableActions">
+              <button mat-icon-button [matTooltip]="action.name" (click)="sendMessage('', action.name)">
+                
+                <ng-container *ngIf="action.type;else other_content">
+                  <mat-icon svgIcon={{action.icon}}></mat-icon>
+                </ng-container>
+
+                <ng-template #other_content>
+                  <mat-icon>{{action.icon}}</mat-icon>
+                </ng-template>
+              </button>
+            </ng-container>
+
+
+            <!-- <button mat-icon-button matTooltip="Export" [matMenuTriggerFor]="menu">
+              <mat-icon>save_alt</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu"> -->
+
+            <!-- <button mat-menu-item aria-label="Reload" (click)="loadUsers(); $event.stopPropagation()">
+                <mat-icon>refresh</mat-icon>
+                <span>Reload</span>
+              </button> -->
+            <!-- 
+              <button mat-menu-item aria-label="Export To Pdf" (click)="exportPDF()">
+                <mat-icon svgIcon="pdf"></mat-icon>
+                <span>Export Pdf</span>
+              </button>
+
+              <button mat-menu-item aria-label="Export To Xml" (click)="exportExcel()">
+                <mat-icon svgIcon="xml"></mat-icon>
+                <span>Export Xml</span>
+              </button> -->
+
+            <!-- <button mat-menu-item aria-label="Export To Cvs">
+                <mat-icon svgIcon="cvs"></mat-icon>
+                <span>Export Cvs</span>
+              </button> -->
+
+            <!-- </mat-menu> -->
+          </div>
+        </mat-card-title>
+        <mat-divider></mat-divider>
+      </div>
+      <br>
+
+      <mat-card class="example-main">
+
+        <mat-card-content>
+
+          <div fxLayout="row" fxLayoutGap="20px" style="padding: 0 10px">
+            <div *ngIf="this.options.showSelect || this.options.showActions" fxFlex="8" fxFlex.md="10" fxFlex.sm="15"
+              fxFlex.xs="30">
+              <div fxLayout="row" fxLayoutAlign="space-between center" class="primary-checkbox" style="padding: 9px;">
+
+                <mat-checkbox *ngIf="this.options.showSelect" (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="dataSource.data.length == 0"
+                  color="primary" matTooltip="Select All">
+                </mat-checkbox>
+
+                <div>
+
+                  <button *ngIf="this.options.showActions" fxFlex mat-icon-button matTooltip="Export"
+                    [matMenuTriggerFor]="menu">
+                    <mat-icon>view_list</mat-icon>
+                  </button>
+
+                  <mat-menu #menu="matMenu">
+                    <ng-container *ngFor="let action of options.multipleActions">
+                      <button mat-menu-item (click)="exportPDF()">
+                        <!-- <mat-icon svgIcon={{action.icon}}></mat-icon> -->
+                        <mat-icon>{{action.icon}}</mat-icon>
+                        <span>{{action.name}}</span>
+                      </button>
+                    </ng-container>
+
+                    <!-- <button mat-menu-item aria-label="Reload" (click)="loadUsers(); $event.stopPropagation()">
+                        <mat-icon>refresh</mat-icon>
+                        <span>Reload</span>
+                      </button> -->
+
+                    <button mat-menu-item aria-label="Delete Selected" matTooltip="Delete Selected"
+                      (click)="deleteSelected()" *ngIf="selection.selected.length">
+                      <mat-icon>delete_forever</mat-icon>
+                      <span>Delete Selected</span>
+                    </button>
+
+                    <button mat-menu-item aria-label="Export To Pdf" (click)="exportPDF()">
+                      <mat-icon svgIcon="pdf"></mat-icon>
+                      <span>Export Pdf</span>
+                    </button>
+
+                    <button mat-menu-item aria-label="Export To Xml" (click)="exportExcel()">
+                      <mat-icon svgIcon="xml"></mat-icon>
+                      <span>Export Xml</span>
+                    </button>
+
+                    <!-- <button mat-menu-item aria-label="Export To Cvs">
+                        <mat-icon svgIcon="cvs"></mat-icon>
+                        <span>Export Cvs</span>
+                      </button> -->
+
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+
+            <div fxFlex>
+
+              <app-search *ngIf="showSearchFilter" [filter]="options.searchFilters" (filterEmiter)="search($event)">
+              </app-search>
+            </div>
+
+          </div>
+
+          <ng-template [ngIf]="view" [ngIfElse]="listView">
+            <mat-table #TABLE [dataSource]="dataSource" matSort class="dss-table" multiTemplateDataRows
+              cdkDropListGroup>
+              <!-- First Row -->
+              <ng-container matColumnDef="{{tableColumn}}" *ngFor="let tableColumn  of dynamicColumns; let i=index">
+                <mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDropList
+                  (cdkDragStarted)="dragStarted($event, i)" cdkDropListLockAxis="x" cdkDropListOrientation="horizontal"
+                  (cdkDropListDropped)="dropListDropped($event, i)">
+                  {{tableColumn.toUpperCase()}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <ng-container *ngIf="!(row[tableColumn] | isArray) && !(row[tableColumn] | isDate) ">
+                    <span class="mobile-label">{{tableColumn.toUpperCase()}}:</span>
+                    <div [ngClass]="{'badge': tableColumn == 'status' }">
+                      {{row[tableColumn]}}
+
+                    </div>
+                  </ng-container>
+
+                  <!-- Special Cases when the data to show in cell is Date Type  -->
+                  <ng-container *ngIf="row[tableColumn] | isDate">
+                    <span class="mobile-label">{{tableColumn.toUpperCase()}}:</span>
+
+                    {{row[tableColumn] | date: 'medium'}}
+                  </ng-container>
+
+                  <!-- Special Cases when the data to show in cell is Array  -->
+                  <ng-container *ngIf="row[tableColumn] | isArray">
+
+                    <ng-container *ngFor="let element of row[tableColumn]">
+
+                      <!-- Arange viw for each array specifically-->
+                      <ng-container *ngIf="tableColumn == 'role'">
+                        <!-- For Mobile View -->
+                        <span class="mobile-label">{{tableColumn.toUpperCase()}}:</span>
+                        <!-- For Mobile View -->
+                        <p>{{element}}</p>
+                        <!-- <ng-container>
+                            {{element}}
+                            <br>
+                          </ng-container> -->
+                      </ng-container>
+
+                      <ng-container *ngIf="tableColumn == 'applicationRoles'">
+                        <!-- For Mobile View -->
+                        <span class="mobile-label">{{tableColumn.toUpperCase()}}:</span>
+                        <!-- For Mobile View -->
+                        <ng-container>
+                          {{element.applicationName}}: {{element.roleName}}
+                          <br>
+                        </ng-container>
+                      </ng-container>
+                      <!-- Arange viw for each array specifically-->
+
+                    </ng-container>
+                  </ng-container>
+                  <!-- Special Cases when the data to show in cell is Array  -->
+
+                  <!-- Special Cases when the data to show in cell is Object  -->
+                  <!-- <ng-container *ngIf="isObject(row[tableColumn])">
+
+                    <ng-container *ngIf="tableColumn == 'systemRole'"> -->
+                  <!-- For Mobile View -->
+                  <!-- <span class="mobile-label">{{tableColumn.toUpperCase()}}:</!-->
+                  <!-- For Mobile View -->
+                  <!-- <ng-container>
+                        {{row[tableColumn].name}}
+                      </ng-container>
+                    </ng-container>
+                  </ng-container> -->
+                  <!-- Special Cases when the data to show in cell is Object  -->
+                </mat-cell>
+              </ng-container>
+              <!-- First Row -->
+
+              <!-- Second Row -->
+              <ng-container matColumnDef="{{secondaryTableColumn}}"
+                *ngFor="let secondaryTableColumn  of secondaryDynamicColumns">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{secondaryTableColumn}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row[secondaryTableColumn]}}</mat-cell>
+              </ng-container>
+              <!-- Second Row -->
+
+              <!-- Actions -->
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>
+
+                  <!-- <button mat-icon-button aria-label="add" matTooltip="Add" (click)="sendMessage('','add')">
+                    <mat-icon>add</mat-icon>
+                  </button> -->
+                  <button mat-icon-button aria-label="Delete Selected" matTooltip="Delete Selected"
+                    (click)="deleteSelected()" *ngIf="selection.selected.length">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Export" [matMenuTriggerFor]="menu">
+                    <mat-icon>save_alt</mat-icon>
+                  </button>
+
+                  <mat-menu #menu="matMenu">
+                    <ng-container *ngFor="let action of options.multipleActions">
+                      <button mat-menu-item (click)="exportPDF()">
+                        <!-- <mat-icon svgIcon={{action.icon}}></mat-icon> -->
+                        <mat-icon>{{action.icon}}</mat-icon>
+                        <span>{{action.name}}</span>
+                      </button>
+                    </ng-container>
+
+                    <!-- <button mat-menu-item aria-label="Reload" (click)="loadUsers(); $event.stopPropagation()">
+                      <mat-icon>refresh</mat-icon>
+                      <span>Reload</span>
+                    </button> -->
+
+                    <button mat-menu-item aria-label="Export To Pdf" (click)="exportPDF()">
+                      <mat-icon svgIcon="pdf"></mat-icon>
+                      <span>Export Pdf</span>
+                    </button>
+
+                    <button mat-menu-item aria-label="Export To Xml" (click)="exportExcel()">
+                      <mat-icon svgIcon="xml"></mat-icon>
+                      <span>Export Xml</span>
+                    </button>
+
+                    <!-- <button mat-menu-item aria-label="Export To Cvs">
+                      <mat-icon svgIcon="cvs"></mat-icon>
+                      <span>Export Cvs</span>
+                    </button> -->
+
+                  </mat-menu>
+                </mat-header-cell>
+
+                <mat-cell *matCellDef="let row">
+                  <!-- <button mat-icon-button matTooltip="View" (click)="sendMessage(row, 'edit')">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+  
+                  <button mat-icon-button matTooltip="Edit" (click)="sendMessage(row, 'edit')">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+  
+                  <button mat-icon-button matTooltip="Delete" (click)="sendMessage(row, 'delete')">
+                    <mat-icon>delete</mat-icon>
+                  </button> -->
+                  <button mat-icon-button matTooltip="More Actions" [matMenuTriggerFor]="menu"
+                    (click)="$event.stopPropagation()">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+
+                  <mat-menu #menu="matMenu">
+                    <ng-container *ngFor="let action of options.rowActions">
+                      <button mat-menu-item (click)="sendMessage(row, action.name)">
+                        <mat-icon>{{action.icon}}</mat-icon>
+                        <span>{{action.name}}</span>
+                      </button>
+                    </ng-container>
+
+                    <button mat-menu-item (click)="sendMessage(row, 'edit')">
+                      <mat-icon>launch</mat-icon>
+                      <span>Edit</span>
+                    </button>
+
+                    <button mat-menu-item (click)="sendMessage(row, 'delete')">
+                      <mat-icon color="warn">delete_outline</mat-icon>
+                      <span>Delete</span>
+                    </button>
+
+                  </mat-menu>
+
+                  <button mat-icon-button matTooltip="More Details" *ngIf="extraDetail.length > 0">
+                    <mat-icon (click)="expandedElement = expandedElement === row ? null : row">
+                      {{expandedElement === row ? 'keyboard_arrow_up': 'keyboard_arrow_down'}}</mat-icon>
+                  </button>
+
+                </mat-cell>
+              </ng-container>
+              <!-- Actions -->
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <mat-cell *matCellDef="let element">
+                  <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <div class="example-element-diagram">
+                      <div class="example-element-position"> {{element.firstname}} </div>
+                      <div class="example-element-symbol"> {{element.lastname}} </div>
+                      <div class="example-element-name"> {{element.email}} </div>
+                      <div class="example-element-weight"> {{element.weight}} </div>
+                    </div>
+                    <div class="example-element-description">
+                      {{element.description}}
+                      <span class="example-element-description-attribution"> -- Details </span>
+                    </div>
+                  </div>
+                </mat-cell>
+              </ng-container>
+              <!-- Expanded Content Column -->
+
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="dataSource.data.length == 0"
+                    color="primary" matTooltip="Select All">
+                  </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null; highlight(row)"
+                    [checked]="selection.isSelected(row)" color="primary" matTooltip="Select">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container>
+              <!-- Checkbox Column -->
+
+              <ng-container matColumnDef="info">
+                <mat-footer-cell *matFooterCellDef>
+                  DataSource is Empty
+                </mat-footer-cell>
+              </ng-container>
+
+
+              <mat-header-row *matHeaderRowDef="tableColumns" class="mat-table-header"></mat-header-row>
+              <!-- <mat-header-row *matHeaderRowDef="secondaryDynamicColumns" class="mat-table-header"></mat-header-row> -->
+
+              <mat-row *matRowDef="let row; columns: tableColumns;" class="mat-table-row example-element-row" matRipple
+                style="margin-top: 1vh; border-radius: 5px; min-height: 6.5vh"
+                [ngClass]="{'make-highlight': row.selected, 'ribbon-red': row.ribbon == 'red' || row.active == false, 'ribbon-green': row.ribbon == 'green' || row.active == true, 'ribbon-yellow': row.ribbon == 'yellow', 'ribbon-grey': row.ribbon == 'grey'}"
+                (click)="sendMessage(row,'view')">
+              </mat-row>
+
+              <div *ngIf="secondaryDynamicColumns.length > 0">
+                <mat-row *matRowDef="let row; columns: secondaryDynamicColumns;"
+                  class="mat-table-row example-element-row" matRipple
+                  style="border-radius: 0 0 5px 5px / 0 0 5px 5px ; margin-top: -1px;"
+                  [ngClass]="{'make-highlight': row.selected, 'ribbon-red': row.ribbon == 'red' || row.active == false, 'ribbon-green': row.ribbon == 'green' || row.active == true, 'ribbon-yellow': row.ribbon == 'yellow', 'ribbon-grey': row.ribbon == 'grey'}">
+                </mat-row>
+              </div>
+
+              <ng-container *ngIf="extraDetail.length > 0">
+                <tr mat-row *matRowDef="let row; columns: extraDetail" class="example-detail-row"></tr>
+              </ng-container>
+
+              <!-- <ng-container *ngIf="!dataSource.data.length">  -->
+              <mat-footer-row *matFooterRowDef="['info']" [ngClass]="{'hide':dataSource.data.length!=0}">
+              </mat-footer-row>
+              <!-- </ng-container> -->
+
+
+            </mat-table>
+          </ng-template>
+
+          <ng-template #listView>
+            test list
+            <app-rs-test></app-rs-test>
+          </ng-template>
+
+
+          <!-- <mat-toolbar class="dss-table"> -->
+          <mat-toolbar-row fxLayout.xs="column" fxLayoutAlign.xs="start none">
+
+            <mat-icon (click)="drawer.toggle()" matTooltip="Table Settings">settings</mat-icon>
+            <mat-icon (click)="changeView()">360</mat-icon>
+
+            <span class="example-spacer"></span>
+
+            <!-- <mat-paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="2"
+              [pageSizeOptions]="[1, 5, 10, 25, 100]" showFirstLastButtons>
+            </mat-paginator> -->
+            <mat-paginator [length]="dataSource.data.length" [pageIndex]="paginatorOptions.pageIndex"
+              [pageSize]="paginatorOptions.pageSize" [pageSizeOptions]="paginatorOptions.pageSizeOptions"
+              showFirstLastButtons>
+            </mat-paginator>
+            <div style="margin-right: 8px;">
+              <span class="example-label">Go To Page: </span>
+              <mat-form-field appearance="standard" class="page-input" [(ngModel)]="manualPage" name="manualPage"
+                ngDefaultControl (ngModelChange)="updateManualPage($event)">
+                <!-- <mat-label>Jump to Page</mat-label> -->
+                <input matInput type="number" placeholder="" [value]="manualPage">
+              </mat-form-field>
+            </div>
+          </mat-toolbar-row>
+          <!-- </mat-toolbar> -->
+
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

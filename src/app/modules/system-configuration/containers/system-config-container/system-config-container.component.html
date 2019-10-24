@@ -1,0 +1,48 @@
+<!-- <p>
+  system-config-container works!
+</p>
+ -->
+
+<div id="profile" class="page-layout simple tabbed">
+
+  <!-- HEADER -->
+  <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+    fxLayoutAlign.gt-sm="space-between end">
+
+    <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="start center">
+      <!-- <img class="profile-image avatar huge" src="../../../../assets/system-config-module/repairing-service.svg"
+             [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"> -->
+      <mat-icon class="profile-image avatar huge" svgIcon="settings"
+        [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"></mat-icon>
+      <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        System Configuration
+      </div>
+    </div>
+
+    <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+      <!-- <button mat-raised-button color="accent" aria-label="Follow">Follow</button> -->
+      <button mat-raised-button color="primary" aria-label="Save">Save</button>
+    </div>
+
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <nav mat-tab-nav-bar style="overflow: auto">
+      <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive">
+        {{link.label}}
+      </a>
+    </nav>
+
+    <div style="padding: 10px">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>

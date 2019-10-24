@@ -1,0 +1,40 @@
+<!-- <p>
+  view-edit-key-language works!
+</p> -->
+<div fxLayoutAlign="end end">
+    <button color="primary" mat-icon-button (click)="close();">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+  <div style="width: 300px;">
+  
+  <form [formGroup]="form">
+  
+    <mat-form-field appearance="standard" class="example-width">
+      <mat-label>Language</mat-label>
+      <input matInput readonly placeholder="Language" class="example-width" formControlName="language">
+      <!-- <mat-icon matSuffix>create</mat-icon>
+      <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <br>
+  
+    <mat-form-field appearance="standard" class="example-width">
+      <mat-label>Key</mat-label>
+      <input matInput placeholder="Key" class="example-width" formControlName="key">
+      <!-- <mat-icon matSuffix>create</mat-icon>
+      <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <br>
+  
+    <mat-form-field appearance="standard" class="example-width">
+      <mat-label>Value</mat-label>
+      <input matInput placeholder="Value" class="example-width" formControlName="value">
+      <!-- <mat-icon matSuffix>create</mat-icon>
+      <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <br>
+  
+  </form>
+  {{data | json}}
+  
+  </div>

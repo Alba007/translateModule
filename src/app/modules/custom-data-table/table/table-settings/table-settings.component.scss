@@ -1,0 +1,13 @@
+.example-space {
+    padding-right: 15px
+}
+
+.example-content {
+    display: block;
+    // margin: 0 -24px;
+    padding: 0 24px;
+    // max-height: 70vh;
+    max-height: 59vh;
+    min-height: 47em;
+    overflow: auto;
+}

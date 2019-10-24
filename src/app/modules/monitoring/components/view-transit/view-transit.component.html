@@ -1,0 +1,84 @@
+<!-- <p>
+  view-transit works!
+</p> -->
+
+<!-- {{data |json}} -->
+
+<div fxLayoutAlign="end end">
+  <button color="primary" mat-icon-button (click)="close();">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<div style="width: 300px;">
+  <div class="group">
+
+    <h2>Transit Info</h2>
+    <div>
+      <strong>Plate :</strong> {{data?.plate}}
+    </div>
+    <div>
+      <strong>Lane :</strong> {{data?.lane}}
+    </div>
+    <div>
+      <strong>Numread :</strong> {{data?.numread}}
+    </div>
+    <div>
+      <strong>Time :</strong> {{data?.time}}
+    </div>
+    <div>
+      <strong>Country :</strong> {{data?.country}}
+    </div>
+    <div>
+      <strong>Vehicle_class :</strong> {{data?.vehicle_class}}
+    </div>
+    <div>
+      <strong>GantryID :</strong> {{data?.gantryID}}
+    </div>
+    <div>
+      <strong>OBUID :</strong> {{data?.OBUID}}
+    </div>
+    <div>
+      <strong>ObuType :</strong> {{data?.obuType}}
+    </div>
+    <div>
+      <strong>Date :</strong> {{data?.date | date}}
+    </div>
+    <div>
+      <strong>ocr_score :</strong> {{data?.ocr_score}}
+    </div>
+    <div>
+      <strong>plate_and_country :</strong> {{data?.plate_and_country}}
+    </div>
+    <div>
+      <strong>plate_not_read :</strong> {{data?.plate_not_read}}
+    </div>
+    <div>
+      <strong>vehicle_direction :</strong> {{data?.vehicle_direction}}
+    </div>
+    <div>
+      <strong>vehicle_speed :</strong> {{data?.vehicle_speed}}
+    </div>
+    <div>
+      <strong>vehicle_color :</strong> {{data?.vehicle_color}}
+    </div>
+    <div>
+      <strong>traffic_status :</strong> {{data?.traffic_status}}
+    </div>
+    <div>
+      <strong>traffic_alarm :</strong> {{data?.traffic_alarm}}
+    </div>
+    <div>
+      <strong>mean_transit :</strong> {{data?.mean_transit}}
+    </div>
+    <div>
+      <strong>total_transit :</strong> {{data?.total_transit}}
+    </div>
+    <div>
+      <strong>radar_speed_kmh :</strong> {{data?.radar_speed_kmh}}
+    </div>
+    <div>
+      <strong>gps_data :</strong> {{data?.gps_data}}
+    </div>
+  </div>
+</div>

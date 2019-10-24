@@ -1,0 +1,52 @@
+<!-- <p>
+  app-dynamic-roles works!
+</p> -->
+<form [formGroup]="form" class="example-content" mat-dialog-content>
+
+  <div formArrayName="roles">
+
+    <div *ngFor="let tableCol of tableColumnForms.controls; let i=index" [formGroupName]="i">
+      
+      <mat-checkbox 
+      class="example-space" 
+      color='primary' 
+      formControlName="select">
+      </mat-checkbox>
+
+      <mat-form-field appearance="outline" class="example-space">
+        <mat-label>Column Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name">
+        <mat-icon matSuffix>create</mat-icon>
+        <mat-hint>Hint</mat-hint>
+        <!-- <mat-error *ngIf="hasError('code', 'required')">Status Code is required</mat-error> -->
+      </mat-form-field>
+
+      <button mat-icon-button [color]="'primary'" class="example-outline" (click)="deleteTableColumn(i)"
+        matTooltip="Delete" matTooltipPosition="right" matTooltipClass="warn-tooltip-red">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+    </div>
+
+  </div>
+
+  <div fxLayout="row">
+    <mat-chip-list class="example-space">
+      <mat-chip color="primary" (click)="addTableColumn()" matTooltip="Add Another">
+        <mat-icon>add</mat-icon>
+        Table Column
+      </mat-chip>
+    </mat-chip-list>
+
+    <mat-chip-list *ngIf="tableColumnForms.length !==0">
+      <mat-chip color="warn" (click)="deleteAllTableColumns()" matTooltip="Delete All Fields">
+        <mat-icon>delete_forever</mat-icon>
+        Delete All
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <pre>
+      {{ form.value | json }}
+    </pre>
+</form>

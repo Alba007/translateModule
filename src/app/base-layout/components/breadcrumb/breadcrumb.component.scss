@@ -1,0 +1,131 @@
+
+
+$blue-gray 			    : #1d2022;
+$blue-gray-darken 	: #2c3e50;
+$blue 				      : #242c31;
+$blue-darken 		    : #1e272c;
+$green 				      : #181d1c;
+$green-darken 		  : #1a1f1e;
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Muli,Helvetica Neue,Arial,sans-serif;
+  font-size: 12px;
+}
+
+body{
+  text-align: center;
+  background-color: $blue-gray;
+}
+
+h1{
+  font-weight:100;
+  font-size:32px;
+  padding:40px;
+  color:#fff;
+}
+
+#breadcrumb{
+  list-style:none;
+  
+  .icon{
+    font-size: 14px;
+  }
+  
+  li{
+    float:left;
+    a{
+      color:#FFF;
+      display:block;
+      background: $blue;
+      text-decoration: none;
+      position:relative;
+      height: 30px;
+      line-height:30px;
+      padding: 0 10px 0 5px;
+      text-align: center;
+      margin-right: 23px;
+    }
+    &:nth-child(even){
+      a{
+        background-color: $blue-darken;
+        
+        &:before{
+          border-color:$blue-darken;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:$blue-darken;
+        }
+      }
+    }
+    &:first-child{
+      a{
+        padding-left:15px;
+        &:before{
+          border:none;
+         }
+      }
+    }
+    &:last-child{
+      a{
+        padding-right:15px;
+        &:after{
+          border:none;
+         }
+      }
+    }
+    
+    a{   
+      &:before,
+      &:after{
+        content: "";
+        position:absolute;
+        top: 0;
+        border:0 solid $blue;
+        border-width:15px 10px;
+        width: 0;
+        height: 0;
+      }
+      &:before{
+        left:-20px;
+        border-left-color:transparent;
+      }
+      &:after{
+        left:100%;
+        border-color:transparent;
+        border-left-color:$blue;
+      }
+      &:hover{
+        background-color: $green;
+        
+        &:before{
+          border-color:$green;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:$green;
+        }
+      }
+      &:active{
+        background-color: $green-darken;
+        
+        &:before{
+          border-color:$green-darken;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:$green-darken;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  li.responsiveBreadcrumb{
+    display: none !important;
+    background: transparent !important
+  }
+}

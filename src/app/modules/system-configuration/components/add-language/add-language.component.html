@@ -1,0 +1,56 @@
+<!-- <p>
+  add-language works!
+</p> -->
+<div fxLayout="row" fxLayoutAlign="space-between center" matDialogTitle>
+
+  <div fxLayoutAlign="start center">
+    <span class="title dialog-title">Add Language</span>
+  </div>
+
+  <div fxLayoutAlign="end end">
+    <button color="primary" mat-icon-button (click)="close();">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+</div>
+<mat-divider></mat-divider>
+<br>
+
+<form [formGroup]="form" mat-dialog-content>
+  <mat-form-field class="example-width example-space">
+    <mat-label>Avail. Languages</mat-label>
+    <mat-select formControlName="languages">
+      <mat-option *ngFor="let language of availableLanguage" [value]="language">
+        {{language}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>New Language</mat-label>
+    <input matInput placeholder="Name" formControlName="newLanguage">
+    <!-- <mat-icon matSuffix>create</mat-icon>
+        <mat-hint>Hint</mat-hint> -->
+  </mat-form-field>
+
+  <!-- <button mat-icon-button (click)="showNewLangInput()" *ngIf="!show">
+    <mat-icon>add_circle</mat-icon>
+  </button> -->
+
+
+  <pre>
+      {{form.value | json}}
+    </pre>
+
+
+</form>
+
+<div mat-dialog-actions fxLayoutAlign="end end">
+  <button mat-raised-button color='primary' (click)="addNewLanguage()" [mat-dialog-close]="true"
+    [disabled]="form.invalid">
+    Save
+  </button>
+  <button mat-button mat-dialog-close>Cancel</button>
+
+</div>

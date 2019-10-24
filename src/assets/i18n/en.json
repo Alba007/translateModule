@@ -1,0 +1,9 @@
+{
+  "true": "1",
+  "false": "0",
+    "HOME": {
+      "TITLE": "Hello Angular with ngx-translate!",
+      "SELECT": "Change language"
+    }
+  }
+  

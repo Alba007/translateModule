@@ -1,0 +1,74 @@
+<!-- <p>
+  search works!
+</p> -->
+<mat-form-field appearance="outline" class="example-width">
+  <mat-label>Search</mat-label>
+  <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let filter of filters"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(filter)">
+        {{filter.key}} : 
+        <ng-template [ngIf]="filter.value" [ngIfElse]="chipInput">
+          <div class="lessons-list">
+            {{ filter.value}} 
+          </div>
+        </ng-template>
+       
+        <ng-template #chipInput>
+
+          <input *ngIf="filter.type != 'date'; else dateInput"
+          matInput 
+          placeholder="Name"
+          #filterInput
+          [formControl]="filterControl"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)"
+          autoFocus>
+        </ng-template>
+        <ng-template #dateInput>
+            <input
+            matInput  
+            [style.width]="'350px'"
+            [selectMode]="'range'"
+            [owlDateTimeTrigger]="dtRange1" 
+            [owlDateTime]="dtRange1"
+            readonly
+            
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)"
+            >
+            <span class="trigger" [owlDateTimeTrigger]="dtRange1">
+                <i class="fas fa-calendar-alt"></i>
+            </span>
+            <owl-date-time #dtRange1 (afterPickerClosed)="filterEmiter.emit(this.filters)"></owl-date-time>   
+        </ng-template>
+       
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Click"
+        #filterInput
+        [formControl]="filterControl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="add($event)"
+        (focus)="handleShowAutocomplete()"
+        (input)="handleShowAutocomplete()"
+        readonly
+        >
+    </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
+  </mat-autocomplete>
+  <mat-icon matSuffix>search</mat-icon>
+  <!-- <mat-hint>Hint</mat-hint> -->
+</mat-form-field>
+

@@ -1,0 +1,118 @@
+<div class="page-layout blank p-12" fusePerfectScrollbar>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <!-- CENTER -->
+    <div fxLayoutAlign="start center">
+      <span class="mat-display-1 my-0 my-sm-12 welcome-message" [@animate]="{value:'*',params:{x:'50px'}}">
+        Apps
+      </span>
+    </div>
+    <!-- ADD  BUTTON -->
+    <div fxLayoutAlign="end end">
+      <button mat-fab class="primary" id="add-contact-button" (click)="addEditApp()" aria-label="add contact"
+        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+  <!-- / ADD  BUTTON -->
+  <div class="center" fusePerfectScrollbar>
+
+    <div class="widget-group p-0" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+      <ng-container *ngFor="let app of appsList">
+        <!-- WIDGET 1 -->
+        <!-- <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="row" fxFlex="100"
+          fxFlex.gt-xs="50" fxFlex.gt-md="25"> -->
+        <fuse-widget class="widget" fxLayout="row" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+
+          <!-- Front -->
+          <div class="fuse-widget-front">
+            <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+
+              <div  fxLayoutAlign="start center">
+                <button *ngIf="false" mat-icon-button fuseWidgetToggle aria-label="switch">
+                  <mat-icon>autorenew</mat-icon>
+                </button>
+              </div>
+              <div fxLayoutAlign="end end">
+                <button mat-icon-button aria-label="more" [matMenuTriggerFor]="userMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </div>
+
+
+            </div>
+            <!-- More menu -->
+            <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+
+              <!-- <button mat-menu-item>
+                <mat-icon>account_circle</mat-icon>
+                <span>Add User</span>
+              </button> -->
+
+              <button mat-menu-item [routerLink]="[ '/usersManage/user' ]">
+                <mat-icon>mail</mat-icon>
+                <span>Users List</span>
+              </button>
+
+              <button mat-menu-item (click)="addEditApp(app)">
+                <mat-icon>build</mat-icon>
+                <span>Edit App</span>
+              </button>
+
+              <button mat-menu-item (click)="deleteApp(app)">
+                <mat-icon color="warn">delete_outline</mat-icon>
+                <span>Delete App</span>
+              </button>
+
+            </mat-menu>
+            <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+              <img src="{{app.iconUrl}}" alt="Icon Missing" class="example-size">
+              <!-- <img class="logo-icon"
+            src="../../../assets/app-icons/{{fuseConfig.colorTheme.indexOf('dark') == -1? 'road sight.svg':'road sight for dark theme.svg'}}">
+                 -->
+              <br>
+              <div class="light-red-fg font-size-32 line-height-32" style="text-align: center">
+                {{app.applicationName}}
+              </div>
+              <br>
+              <div class="h3 secondary-text font-weight-500" style="padding: 10px">
+                {{app.description.en}}
+              </div>
+            </div>
+
+            <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon style="color:green" title="Status Live">fiber_manual_record</mat-icon>
+
+              <a mat-button href="{{app.applicationUrl}}">
+                Open
+                <mat-icon>arrow_right_alt</mat-icon>
+              </a>
+            </div>
+          </div>
+          <!-- / Front -->
+
+          <!-- Back -->
+          <div class="fuse-widget-back p-16 pt-32">
+            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+              <mat-icon class="s-16">close</mat-icon>
+            </button>
+
+            <div>
+              Name : {{app.name}}
+              <br>
+              Project : {{app.description}}
+              <br>
+              New Features
+
+            </div>
+          </div>
+
+          <!--/ Back -->
+
+
+
+        </fuse-widget>
+        <!-- / WIDGET 1 -->
+      </ng-container>
+
+    </div>
